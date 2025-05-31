@@ -47,11 +47,10 @@ struct ub_result *new_ub_result() {
 	r = calloc(sizeof(struct ub_result), 1);
 	return r;
 }
-int    ub_ttl(struct ub_result *r) {
-	int *p;
-	// Go to why_bogus add the pointer and then we will find the ttl, hopefully.
-	p = (int*) ((char*)r + offsetof(struct ub_result, why_bogus) + sizeof(char*));
-	return (int)*p;
+int	ub_ttl(struct ub_result *r) {
+	 // FIXED: Modern libunbound (1.4.20+) has a direct ttl field in struct ub_result
+	 // No need for dangerous pointer arithmetic - just access r->ttl directly
+	 return r->ttl;
 }
 */
 import "C"
